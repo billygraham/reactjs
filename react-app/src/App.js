@@ -1,7 +1,22 @@
+import { useState } from 'react';
+import Counter from './Counter';
+import PartnerDirectory from './PartnerDirectory';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [visibleComponents, setVisibleComponents] = useState({
+    Counter: false,
+    PartnerDirectory: false
+  });
+
+  const toggleComponent = (key) => {
+    setVisibleComponents((prev) => ({
+      ...prev,
+      [key]: !prev[key] // Toggle specific one
+    }));
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -17,6 +32,16 @@ function App() {
         >
           Learn React
         </a>
+
+        <button onClick={() => toggleComponent('Counter')}>
+          {visibleComponents.Counter ? 'Hide' : 'Show'} Counter
+        </button>
+        <button onClick={() => toggleComponent('PartnerDirectory')}>
+          {visibleComponents.PartnerDirectory ? 'Hide' : 'Show'} PartnerDirectory
+        </button>
+
+        {visibleComponents.Counter && <Counter />}
+        {visibleComponents.PartnerDirectory && <PartnerDirectory />}
       </header>
     </div>
   );
